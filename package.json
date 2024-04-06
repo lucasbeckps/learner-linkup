@@ -1,0 +1,14 @@
+{
+  "name": "learner-linkup",
+  "version": "0.0.0",
+  "description": "LearnerLinkup is a web application designed to streamline the student enrollment process.",
+  "main": "index.js",
+  "repository": "https://github.com/repo.changeme.com/123",
+  "author": "Lucas Beck",
+  "license": "MIT",
+  "packageManager": "yarn@4.1.1",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
