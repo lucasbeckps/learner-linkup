@@ -1,4 +1,4 @@
-FROM postgres:16.1-alpine
+FROM postgres:16.2-alpine
 
 COPY ./docker/development/postgres/postgresql.conf /etc/postgresql/
 
