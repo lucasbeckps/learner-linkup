@@ -11,13 +11,16 @@ services:
     environment:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_DB=${DB_NAME}
     networks:
         learner-linkup-network:
           ipv4_address: 192.168.20.200
+    tmpfs:
+      - /var/lib/postgresql/data
 
 networks:
   learner-linkup-network:
+    name: learner-linkup-network
     driver: bridge
     ipam:
       config:
