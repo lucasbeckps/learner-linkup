@@ -36,7 +36,8 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
-          ["concurrently", "npm:8.2.2"]\
+          ["concurrently", "npm:8.2.2"],\
+          ["typescript", "patch:typescript@npm%3A5.4.4#optional!builtin<compat/typescript>::version=5.4.4&hash=5adc0c"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -7064,7 +7065,8 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["learner-linkup", "workspace:."],\
-          ["concurrently", "npm:8.2.2"]\
+          ["concurrently", "npm:8.2.2"],\
+          ["typescript", "patch:typescript@npm%3A5.4.4#optional!builtin<compat/typescript>::version=5.4.4&hash=5adc0c"]\
         ],\
         "linkType": "SOFT"\
       }]\

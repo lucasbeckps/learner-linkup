@@ -5514,6 +5514,7 @@ __metadata:
   resolution: "learner-linkup@workspace:."
   dependencies:
     concurrently: "npm:^8.2.2"
+    typescript: "npm:^5.1.3"
   languageName: unknown
   linkType: soft
 

@@ -4,5 +4,6 @@
       "@frontend/*": ["./packages/frontend/src/*"],
       "@backend/*": ["./packages/backend/src/*"]
     }
-  }
+  },
+  "exclude": []
 }
