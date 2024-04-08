@@ -10,10 +10,10 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { IsEmail } from 'class-validator';
-import { User } from '@backend/models/user.entity';
+import { UserModel } from '@backend/models/user.entity';
 
 @Entity({ name: 'student' })
-export class Student {
+export class StudentModel {
   @PrimaryGeneratedColumn()
   student_id: number;
 
@@ -35,9 +35,9 @@ export class Student {
   @IsEmail()
   email: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => UserModel)
   @JoinColumn({ name: 'created_by' })
-  created_by: User;
+  created_by: UserModel;
 
   @CreateDateColumn() created_at: Date;
   @UpdateDateColumn() updated_at: Date;

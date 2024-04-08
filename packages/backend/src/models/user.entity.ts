@@ -8,11 +8,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Student } from '@backend/models/student.entity';
+import { StudentModel } from '@backend/models/student.entity';
 
 @Entity({ name: 'user' })
 @Index(['name'], { where: 'deleted_at IS NULL' })
-export class User {
+export class UserModel {
   @PrimaryGeneratedColumn()
   @Index(['user_id'], { where: 'deleted_at IS NULL' })
   user_id: number;
@@ -20,8 +20,8 @@ export class User {
   @Column()
   name: string;
 
-  @OneToMany(() => Student, (student) => student.created_by)
-  students: Student[];
+  @OneToMany(() => StudentModel, (student) => student.created_by)
+  students: StudentModel[];
 
   @CreateDateColumn() created_at: Date;
   @UpdateDateColumn() updated_at: Date;
