@@ -19,12 +19,12 @@ export class StudentService {
   }
 
   applySearch(qb, search) {
-    const nomalizedSearch = search
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-zA-Z0-9]/g, '');
-
     if (search) {
+      const nomalizedSearch = search
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-zA-Z0-9]/g, '');
+
       qb.where('normalize_string(student.name) ILIKE :search', {
         search: `%${search}%`,
       });
