@@ -13,7 +13,13 @@
         />
       </v-col>
       <v-col cols="auto" class="d-flex align-self-center justify-center">
-        <v-btn class="add-student-button" color="secondary" border elevation="0">
+        <v-btn
+          @click="openRegisterModal('new')"
+          class="add-student-button"
+          color="secondary"
+          border
+          elevation="0"
+        >
           Adicionar aluno
         </v-btn>
       </v-col>
@@ -25,31 +31,51 @@
       <v-skeleton-loader type="table-tbody" class="mb-2" style="transform: scaleY(-1)" />
     </div>
     <div v-else-if="isError">{{ error.message }}</div>
-    <v-table v-else>
-      <thead>
-        <tr>
-          <th class="ra-column text-left">Registro Acadêmico</th>
-          <th class="text-left">Nome</th>
-          <th class="text-left">CPF</th>
-          <th class="text-left">E-mail</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in students" :key="item.student_id">
-          <td>{{ item.ra }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.cpf }}</td>
-          <td>{{ item.email }}</td>
-        </tr>
-      </tbody>
-    </v-table>
+    <div v-else class="rounded">
+      <v-table class="d-none d-md-flex">
+        <thead>
+          <tr>
+            <th class="ra-column text-left">Registro Acadêmico</th>
+            <th class="text-left">Nome</th>
+            <th class="text-left">CPF</th>
+            <th class="text-left">E-mail</th>
+            <th class="text-left"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in students" :key="item.student_id">
+            <td>{{ item.ra }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.cpf }}</td>
+            <td>{{ item.email }}</td>
+            <td class="text-right">
+              <v-btn
+                @click="openRegisterModal(item)"
+                class="custom-edit-button text-blue-grey-darken-1"
+                flat
+                icon
+              >
+                <v-icon>mdi-pencil</v-icon>
+              </v-btn>
+              <v-btn class="custom-edit-button text-blue-grey-darken-1" flat icon>
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </td>
+          </tr>
+        </tbody>
+      </v-table>
+    </div>
   </v-sheet>
+  <RegisterModal @mounted="({ openModalFn }) => (openRegisterModal = openModalFn)" />
 </template>
 
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query'
 import api, { QueryState } from '@frontend/services/api'
 import { StudentResponseDto } from '@backend/modules/student/dto/student-response.dto'
+import { ref } from 'vue'
+
+const openRegisterModal = ref(() => {})
 
 const fetchStudents = async (): Promise<StudentResponseDto[]> => {
   const { data } = await api.get('students')

@@ -16,7 +16,7 @@
       <v-spacer></v-spacer>
 
       <v-btn>
-        <span class="pr-3">Lucas Beck</span>
+        <span class="pr-3 d-none d-sm-flex">Lucas Beck</span>
         <v-icon style="font-size: 2rem">mdi-account-circle</v-icon>
       </v-btn>
     </v-app-bar>
@@ -69,7 +69,6 @@ import { navigationItems } from '@frontend/plugins/router'
   justify-content: center;
   padding: 0 1.2rem;
   font-size: 0.8rem;
-  //color: var(--v-theme-surface);
 }
 .bottom-navlink i {
   font-size: 1.5rem;
