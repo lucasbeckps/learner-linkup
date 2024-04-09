@@ -14,7 +14,7 @@ const dbdatasource = {
   database: `${process.env.DB_NAME}`,
   synchronize: false,
   entities: ['dist/models/*.entity.js'],
-  migrations: ['dist/migrations/*.js'],
+  migrations: ['dist/migrations/structure/*.js', 'dist/migrations/dummy/*.js'],
   migrationsTableName: 'migrations',
 };
 
