@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
@@ -22,8 +23,10 @@ export default class StudentController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  async getStudents(): Promise<StudentResponseDto[]> {
-    const students = await this.studentService.getStudents();
+  async getStudents(@Query('search') search): Promise<StudentResponseDto[]> {
+    const qb = this.studentService.getBaseQuery();
+    this.studentService.applySearch(qb, search);
+    const students = await this.studentService.getStudents(qb);
     return this.studentService.normalizeStudentList(students);
   }
 

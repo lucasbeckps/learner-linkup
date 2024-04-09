@@ -12,11 +12,39 @@ export class StudentService {
     private readonly studentRepository: Repository<StudentModel>,
   ) {}
 
-  getStudents(): Promise<StudentModel[]> {
+  getBaseQuery() {
     return this.studentRepository
       .createQueryBuilder('student')
-      .orderBy('created_at', 'DESC')
-      .getMany();
+      .orderBy('created_at', 'DESC');
+  }
+
+  applySearch(qb, search) {
+    const nomalizedSearch = search
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-zA-Z0-9]/g, '');
+
+    if (search) {
+      qb.where('normalize_string(student.name) ILIKE :search', {
+        search: `%${search}%`,
+      });
+
+      qb.orWhere('normalize_string(student.ra) ILIKE :search', {
+        search: `%${nomalizedSearch}%`,
+      });
+
+      qb.orWhere('normalize_string(student.cpf) ILIKE :search', {
+        search: `%${nomalizedSearch}%`,
+      });
+
+      qb.orWhere('normalize_string(student.email) ILIKE :search', {
+        search: `%${nomalizedSearch}%`,
+      });
+    }
+  }
+
+  getStudents(qb): Promise<StudentModel[]> {
+    return qb.getMany();
   }
 
   normalizeStudentList(students: StudentModel[]): StudentResponseDto[] {

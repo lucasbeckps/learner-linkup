@@ -6,6 +6,7 @@
       </v-col>
       <v-col class="d-flex align-self-center justify-center">
         <v-text-field
+          v-model="search"
           variant="plain"
           hide-details
           class="student-search-input rounded border mr-4"
@@ -83,16 +84,24 @@
 </template>
 
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query'
+import { useQuery, useQueryClient } from '@tanstack/vue-query'
 import api, { QueryState } from '@frontend/services/api'
 import { StudentResponseDto } from '@backend/modules/student/dto/student-response.dto'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { debounce } from 'lodash'
 
 const openRegisterModal = ref(() => {})
 const openDeleteDialog = ref(() => {})
 
+const search = ref('')
+const queryClient = useQueryClient()
+
 const fetchStudents = async (): Promise<StudentResponseDto[]> => {
-  const { data } = await api.get('students')
+  const { data } = await api.get('students', {
+    params: {
+      search: search.value
+    }
+  })
   return data.map((student) => ({
     ...student,
     created_at: new Date(student.created_at)
@@ -106,8 +115,16 @@ const {
   error
 }: QueryState<StudentResponseDto[]> = useQuery({
   queryKey: ['students'],
+  refetchOnWindowFocus: true,
   queryFn: fetchStudents
 })
+
+watch(
+  search,
+  debounce(() => {
+    queryClient.invalidateQueries({ queryKey: ['students'] })
+  }, 500)
+)
 </script>
 
 <style>
