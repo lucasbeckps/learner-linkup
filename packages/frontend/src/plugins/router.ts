@@ -8,7 +8,7 @@ import Alunos from '@/pages/Students.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
+    name: 'Início',
     component: Home
   },
   {
@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
 
 export const navigationItems = [
   {
-    title: 'Home',
+    title: 'Início',
     icon: 'mdi-home',
     to: '/'
   },
@@ -34,11 +34,6 @@ export const navigationItems = [
     title: 'Alunos',
     icon: 'mdi-account-group',
     to: '/alunos'
-  },
-  {
-    title: 'Configurações',
-    icon: 'mdi-cog',
-    to: '/configuracoes'
   }
 ]
 

@@ -1,23 +1,34 @@
 <template>
-  <v-sheet class="pa-2 pl-4" style="border-radius: 7px 7px 0 0" elevation="2" border>
+  <v-sheet class="pa-3 pl-4" style="border-radius: 7px 7px 0 0" elevation="2" border>
     <v-row no-gutters>
-      <v-col cols="auto" class="mr-4">
+      <v-col cols="auto" class="mr-4 d-flex align-self-center justify-center">
         <div class="text-h6">Alunos</div>
       </v-col>
-      <!--      <v-col>-->
-      <!--        <v-btn border elevation="1" style="border-radius: 7px;">-->
-      <!--          Adicionar aluno-->
-      <!--        </v-btn>-->
-      <!--      </v-col>-->
+      <v-col class="d-flex align-self-center justify-center">
+        <v-text-field
+          variant="plain"
+          hide-details
+          class="student-search-input rounded border mr-4"
+          placeholder="Digite sua busca"
+        />
+      </v-col>
+      <v-col cols="auto" class="d-flex align-self-center justify-center">
+        <v-btn class="add-student-button" color="secondary" border elevation="0">
+          Adicionar aluno
+        </v-btn>
+      </v-col>
     </v-row>
   </v-sheet>
   <v-sheet style="border-radius: 0 0 7px 7px" elevation="2" border>
-    <div v-if="isPending">Carregando...</div>
+    <div v-if="isPending">
+      <v-skeleton-loader type="table-heading" />
+      <v-skeleton-loader type="table-tbody" class="mb-2" style="transform: scaleY(-1)" />
+    </div>
     <div v-else-if="isError">{{ error.message }}</div>
     <v-table v-else>
       <thead>
         <tr>
-          <th class="text-left">Registro Acadêmico</th>
+          <th class="ra-column text-left">Registro Acadêmico</th>
           <th class="text-left">Nome</th>
           <th class="text-left">CPF</th>
           <th class="text-left">E-mail</th>
@@ -55,3 +66,17 @@ const {
   queryFn: fetchStudents
 })
 </script>
+
+<style>
+.student-search-input input {
+  min-height: 1rem;
+  height: 2.3rem;
+  padding: 0 1rem;
+  font-size: 0.9rem;
+}
+
+.add-student-button {
+  border-radius: 5px !important;
+  height: 2.4rem !important;
+}
+</style>
