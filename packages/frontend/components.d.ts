@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     DarkModeToggle: typeof import('./src/components/layout/DarkModeToggle.vue')['default']
+    DeleteDialog: typeof import('./src/components/students/DeleteDialog.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     RegisterModal: typeof import('./src/components/students/RegisterModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

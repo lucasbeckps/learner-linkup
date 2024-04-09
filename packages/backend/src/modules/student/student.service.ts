@@ -56,7 +56,7 @@ export class StudentService {
   async deleteStudent(studentId: number) {
     return this.studentRepository
       .createQueryBuilder('student')
-      .delete()
+      .softDelete()
       .where({ student_id: studentId })
       .execute();
   }

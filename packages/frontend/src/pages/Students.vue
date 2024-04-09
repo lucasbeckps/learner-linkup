@@ -64,7 +64,12 @@
               >
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
-              <v-btn class="custom-list-buttom delete-button text-blue-grey-darken-1" flat icon>
+              <v-btn
+                @click="openDeleteDialog(item)"
+                class="custom-list-buttom delete-button text-blue-grey-darken-1"
+                flat
+                icon
+              >
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </td>
@@ -74,6 +79,7 @@
     </div>
   </v-sheet>
   <RegisterModal @mounted="({ openModalFn }) => (openRegisterModal = openModalFn)" />
+  <DeleteDialog @mounted="({ openDialogFn }) => (openDeleteDialog = openDialogFn)" />
 </template>
 
 <script setup lang="ts">
@@ -83,6 +89,7 @@ import { StudentResponseDto } from '@backend/modules/student/dto/student-respons
 import { ref } from 'vue'
 
 const openRegisterModal = ref(() => {})
+const openDeleteDialog = ref(() => {})
 
 const fetchStudents = async (): Promise<StudentResponseDto[]> => {
   const { data } = await api.get('students')

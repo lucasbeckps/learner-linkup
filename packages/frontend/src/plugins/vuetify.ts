@@ -62,7 +62,7 @@ const dark = {
     'primary-darken-1': '#1F5592',
     secondary: '#007e85',
     'secondary-darken-1': '#008e95',
-    error: '#B00020',
+    error: '#f5002b',
     info: '#2196F3',
     success: '#4CAF50',
     warning: '#FB8C00'
