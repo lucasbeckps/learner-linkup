@@ -18,6 +18,14 @@ const theme = useTheme()
 const darkMode = ref(localStorage.getItem('darkMode') === 'true' ? 1 : 0)
 
 onMounted(() => {
+  if (
+    localStorage.getItem('darkMode') === null &&
+    window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+  ) {
+    darkMode.value = 1
+    return
+  }
   theme.global.name.value = localStorage.getItem('darkMode') === 'true' ? 'dark' : 'light'
 })
 
