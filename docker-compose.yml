@@ -15,8 +15,6 @@ services:
     networks:
         learner-linkup-network:
           ipv4_address: 192.168.20.200
-    tmpfs:
-      - /var/lib/postgresql/data
 
 networks:
   learner-linkup-network:

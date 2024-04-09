@@ -22,5 +22,5 @@
       "@frontend/*": ["../frontend/src/*"],
       "@backend/*": ["../backend/src/*"]
     }
-  }
+  },
 }
