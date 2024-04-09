@@ -77,7 +77,7 @@ import { navigationItems } from '@frontend/plugins/router'
   margin-top: 2px;
 }
 .bottom-navlink.active {
-  background-color: #ffffff0f;
+  background-color: rgba(var(--v-theme-on-surface), 0.1);
 }
 .custom-logo-list-item {
   padding: 0 0.5rem !important;
