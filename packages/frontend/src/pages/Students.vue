@@ -39,6 +39,7 @@
             <th class="text-left">Nome</th>
             <th class="text-left">CPF</th>
             <th class="text-left">E-mail</th>
+            <th class="text-left">Data de cadastro</th>
             <th class="text-left"></th>
           </tr>
         </thead>
@@ -48,6 +49,12 @@
             <td>{{ item.name }}</td>
             <td>{{ item.cpf }}</td>
             <td>{{ item.email }}</td>
+            <td>
+              {{ item.created_at.getDate() }}/{{ item.created_at.getMonth() + 1 }}/{{
+                item.created_at.getFullYear()
+              }}
+              {{ item.created_at.getHours() }}:{{ item.created_at.getMinutes() }}
+            </td>
             <td class="text-right">
               <v-btn
                 @click="openRegisterModal(item)"
@@ -79,7 +86,10 @@ const openRegisterModal = ref(() => {})
 
 const fetchStudents = async (): Promise<StudentResponseDto[]> => {
   const { data } = await api.get('students')
-  return data
+  return data.map((student) => ({
+    ...student,
+    created_at: new Date(student.created_at)
+  }))
 }
 
 const {
