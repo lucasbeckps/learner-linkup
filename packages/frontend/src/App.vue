@@ -14,11 +14,12 @@
       </RouterLink>
 
       <v-spacer></v-spacer>
-
-      <v-btn>
+      <v-btn class="pr-2 pl-2 mr-2 rounded-lg">
         <span class="pr-3 d-none d-sm-flex">Lucas Beck</span>
         <v-icon style="font-size: 2rem">mdi-account-circle</v-icon>
       </v-btn>
+
+      <dark-mode-toggle />
     </v-app-bar>
 
     <v-navigation-drawer class="custom-navigation-drawer" expand-on-hover rail>
@@ -55,6 +56,7 @@
 
 <script setup lang="ts">
 import { navigationItems } from '@frontend/plugins/router'
+import DarkModeToggle from '@frontend/components/layout/DarkModeToggle.vue'
 </script>
 
 <style>
@@ -85,5 +87,27 @@ import { navigationItems } from '@frontend/plugins/router'
 .custom-logo-list-item .v-list-item-title {
   font-weight: 300;
   font-size: 1.5rem;
+}
+.custom-toggle-button {
+  font-size: 0.7rem;
+  color: #777777;
+  width: 34px !important;
+}
+.custom-toggle-button i {
+  transition: all ease-in-out 0.2s;
+  transform: rotate(140deg);
+}
+.custom-toggle-button span {
+  margin-top: -2px;
+  height: calc(100% + 2px);
+}
+.custom-toggle-button.v-btn--active {
+  color: inherit;
+}
+.custom-toggle-button.v-btn--active i {
+  transform: rotate(45deg) translateX(1px) translateY(1px);
+}
+.custom-moon.v-btn--active i {
+  transform: rotate(45deg) translateX(-2px) translateY(2px);
 }
 </style>

@@ -51,13 +51,13 @@
             <td class="text-right">
               <v-btn
                 @click="openRegisterModal(item)"
-                class="custom-edit-button text-blue-grey-darken-1"
+                class="custom-list-buttom text-blue-grey-darken-1"
                 flat
                 icon
               >
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
-              <v-btn class="custom-edit-button text-blue-grey-darken-1" flat icon>
+              <v-btn class="custom-list-buttom delete-button text-blue-grey-darken-1" flat icon>
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </td>
@@ -101,8 +101,20 @@ const {
   font-size: 0.9rem;
 }
 
+.ra-column {
+  width: 180px;
+}
+
 .add-student-button {
   border-radius: 5px !important;
   height: 2.4rem !important;
+}
+
+.custom-list-buttom {
+  width: 40px !important;
+  height: 40px !important;
+}
+.custom-list-buttom.delete-button:hover {
+  color: #d50000d3 !important;
 }
 </style>

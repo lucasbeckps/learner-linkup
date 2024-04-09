@@ -11,7 +11,7 @@ import 'vuetify/styles'
 // Composables
 import { createVuetify } from 'vuetify'
 
-const myCustomLightTheme = {
+const light = {
   dark: false,
   colors: {
     background: '#e2e2e2',
@@ -49,7 +49,7 @@ const myCustomLightTheme = {
   }
 }
 
-const myCustomDarkTheme = {
+const dark = {
   dark: true,
   colors: {
     background: '#1c1c1c',
@@ -60,7 +60,7 @@ const myCustomDarkTheme = {
     'on-surface-variant': '#EEEEEE',
     primary: '#1867C0',
     'primary-darken-1': '#1F5592',
-    secondary: '#00a0a6',
+    secondary: '#007e85',
     'secondary-darken-1': '#008e95',
     error: '#B00020',
     info: '#2196F3',
@@ -90,10 +90,10 @@ const myCustomDarkTheme = {
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
   theme: {
-    defaultTheme: 'myCustomLightTheme',
+    defaultTheme: 'light',
     themes: {
-      myCustomLightTheme,
-      myCustomDarkTheme
+      light,
+      dark
     }
   }
 })
