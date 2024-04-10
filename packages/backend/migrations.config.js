@@ -18,6 +18,8 @@ const dbdatasource = {
     'dist/migrations/structure/*.js',
     'dist/migrations/extensions/*.js',
     'dist/migrations/functions/*.js',
+
+    // Dummy data seeders
     'dist/migrations/dummy/*.js',
   ],
   migrationsTableName: 'migrations',
