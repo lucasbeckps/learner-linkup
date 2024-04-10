@@ -1,3 +1,9 @@
+/* Vuetify */
+.v-overlay__scrim {
+    background-color: rgb(var(--v-theme-background));
+}
+
+/* VueToast */
 .v-toast {
     z-index: 2500;
     width: max-content;
