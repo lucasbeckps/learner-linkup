@@ -20,7 +20,7 @@ const dbdatasource = {
     'dist/migrations/functions/*.js',
 
     // Dummy data seeders
-    'dist/migrations/dummy/*.js',
+    // 'dist/migrations/dummy/*.js',
   ],
   migrationsTableName: 'migrations',
 };

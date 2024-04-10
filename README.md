@@ -35,9 +35,9 @@ Should you prefer utilizing a local PostgreSQL database, adjust the environment 
 - For local PostgreSQL users: Ensure your PostgreSQL database service is active.
 
 ### 5. Apply the migrations: 📝
-Execute `yarn migrate` to apply database migrations and create necessary tables. 
-The project is set to seed the database with preliminary data initially. 
-If desired, these settings can be modified in the [migrations-config.js](/packages/backend/migrations.config.js) file. 
+Execute `yarn migrate` to apply database migrations and create necessary tables.  
+If desired, you can set the project seed the database with preliminary data initially. 
+These settings can be modified in the [migrations-config.js](/packages/backend/migrations.config.js) file. 
 
 ## Running the Application ▶️
 Once the installation and setup processes are complete, the application is ready to be launched.
