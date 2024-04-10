@@ -11,16 +11,29 @@
       </RouterLink>
 
       <v-spacer></v-spacer>
-      <v-btn class="pr-2 pl-2 mr-2 rounded-lg">
-        <span class="pr-3">Lucas Beck</span>
-        <v-icon style="font-size: 2rem">mdi-account-circle</v-icon>
-      </v-btn>
+      <!-- TODO: Auth -->
+      <!--      <v-btn class="pr-2 pl-2 mr-2 rounded-lg">-->
+      <!--        <span class="pr-3">Lucas Beck</span>-->
+      <!--        <v-icon style="font-size: 2rem">mdi-account-circle</v-icon>-->
+      <!--      </v-btn>-->
 
       <dark-mode-toggle />
     </v-app-bar>
 
-    <v-navigation-drawer class="custom-navigation-drawer" expand-on-hover rail>
+    <v-navigation-drawer
+      class="custom-navigation-drawer"
+      @mouseenter="isDrawerOpen = true"
+      @mouseleave="isDrawerOpen = false"
+      expand-on-hover
+      rail
+    >
       <v-list density="compact" nav>
+        <v-list-item class="text-grey" style="height: 10px; min-height: 20px">
+          <span v-if="isDrawerOpen" class="text-no-wrap" style="font-size: 0.8rem"
+            >Módulo Acadêmico</span
+          >
+          <v-icon v-else size="24" class="d-block">mdi-minus</v-icon>
+        </v-list-item>
         <RouterLink v-for="navlink in navigationItems" :to="navlink.to" class="navlink">
           <v-list-item
             :prepend-icon="navlink.icon"
@@ -56,6 +69,9 @@ import { navigationItems } from '@frontend/plugins/router'
 import DarkModeToggle from '@frontend/components/layout/DarkModeToggle.vue'
 import 'vue-toast-notification/dist/theme-sugar.css'
 import './global.css'
+import useDebouncedRef from '@frontend/utils/debounceRef'
+
+const isDrawerOpen = useDebouncedRef(false, 50)
 </script>
 
 <style>
