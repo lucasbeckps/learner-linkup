@@ -4520,6 +4520,7 @@ __metadata:
     vite-plugin-vuetify: "npm:^2.0.3"
     vue: "npm:^3.4.21"
     vue-router: "npm:^4.3.0"
+    vue-toast-notification: "npm:^3"
     vue-tsc: "npm:^2.0.6"
     vuetify: "npm:^3.5.8"
   languageName: unknown
@@ -8706,6 +8707,15 @@ __metadata:
     de-indent: "npm:^1.0.2"
     he: "npm:^1.2.0"
   checksum: 10c0/66667ffd5095b707f169c902c4f1a011e9d5ab99fc228e4dac14eb5ca7f107ed99bff261b21578a4b391d2f3d320a8050e754404443472acad13ddaa4bd7bae2
+  languageName: node
+  linkType: hard
+
+"vue-toast-notification@npm:^3":
+  version: 3.1.2
+  resolution: "vue-toast-notification@npm:3.1.2"
+  peerDependencies:
+    vue: ^3.0
+  checksum: 10c0/0c8542dec1284fa7add1281dd18c10df356e9cd0fcdb92c6d315ab6f15887320a164f811ac40eae4c89f6e2f3edba3933351503bb220a08abdc5b568df01be42
   languageName: node
   linkType: hard
 

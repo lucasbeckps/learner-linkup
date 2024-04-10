@@ -57,6 +57,8 @@
 <script setup lang="ts">
 import { navigationItems } from '@frontend/plugins/router'
 import DarkModeToggle from '@frontend/components/layout/DarkModeToggle.vue'
+import 'vue-toast-notification/dist/theme-sugar.css'
+import './global.css'
 </script>
 
 <style>

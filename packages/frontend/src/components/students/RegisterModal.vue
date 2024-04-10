@@ -1,7 +1,8 @@
 <template>
   <div class="pa-4 text-center">
-    <v-dialog v-model="modalOpen" max-width="600">
+    <v-dialog v-model="modalOpen" v-if="studentEntity" max-width="600">
       <v-card
+        class="rounded-lg"
         prepend-icon="mdi-account"
         :title="
           studentEntity.student_id
@@ -61,6 +62,10 @@ import { StudentRegisterDto } from '@backend/modules/student/dto/student-registe
 import { StudentEditDto } from '@backend/modules/student/dto/student-edit.dto'
 import { StudentResponseDto } from '@backend/modules/student/dto/student-response.dto'
 import api from '@frontend/services/api'
+import { useToast } from 'vue-toast-notification'
+
+const $toast = useToast()
+const emit = defineEmits(['mounted', 'save', 'cancel'])
 
 const modalOpen = ref(false)
 const studentEntity = ref<StudentRegisterDto | StudentEditDto>(null)
@@ -70,24 +75,39 @@ function openModal(requestedStudent: StudentResponseDto | 'new') {
   studentEntity.value =
     typeof requestedStudent === 'object'
       ? new StudentEditDto(requestedStudent)
-      : new StudentRegisterDto()
+      : new StudentRegisterDto({
+          ra: '',
+          cpf: '',
+          name: '',
+          email: ''
+        })
 }
 
 function closeModal() {
+  studentEntity.value && emit('cancel')
   modalOpen.value = false
 }
 
 async function save() {
-  if (studentEntity.value.student_id) {
-    await api.put(`students/${studentEntity.value.student_id}`, studentEntity.value)
-  } else {
-    await api.post('students', studentEntity.value)
+  try {
+    if (studentEntity.value.student_id) {
+      await api.put(`students/${studentEntity.value.student_id}`, studentEntity.value)
+    } else {
+      await api.post('students', studentEntity.value)
+    }
+
+    $toast.success('Aluno salvo com sucesso!')
+    emit('save', studentEntity.value)
+    studentEntity.value = null
+    closeModal()
+  } catch (err) {
+    if (Array.isArray(err?.response?.data?.message)) {
+      err.response.data.message.forEach((message: string) => $toast.error(message))
+    } else {
+      $toast.error('Erro ao salvar aluno')
+    }
   }
-
-  closeModal()
 }
-
-const emit = defineEmits(['mounted'])
 
 onMounted(() => {
   emit('mounted', { openModalFn: openModal })

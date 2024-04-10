@@ -4,6 +4,7 @@ import { StudentModel } from '@backend/models/student.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { StudentResponseDto } from '@backend/modules/student/dto/student-response.dto';
 import { StudentRegisterDto } from '@backend/modules/student/dto/student-register.dto';
+import { StudentEditDto } from '@backend/modules/student/dto/student-edit.dto';
 
 @Injectable()
 export class StudentService {
@@ -15,7 +16,8 @@ export class StudentService {
   getBaseQuery() {
     return this.studentRepository
       .createQueryBuilder('student')
-      .orderBy('created_at', 'DESC');
+      .orderBy('created_at', 'DESC')
+      .addOrderBy('student_id', 'DESC');
   }
 
   applySearch(qb, search) {
@@ -68,7 +70,7 @@ export class StudentService {
 
   async editStudent(
     studentId: number,
-    student: StudentRegisterDto,
+    student: StudentEditDto,
   ): Promise<StudentModel> {
     const studentModel = await this.studentRepository
       .createQueryBuilder('student')
@@ -77,6 +79,7 @@ export class StudentService {
 
     studentModel.name = student.name;
     studentModel.email = student.email;
+    studentModel.updated_at = new Date();
 
     return this.studentRepository.save(studentModel);
   }

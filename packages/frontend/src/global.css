@@ -1,0 +1,17 @@
+.v-toast {
+    z-index: 2500;
+    width: max-content;
+    left: auto;
+    opacity: .9;
+}
+
+.v-toast .v-toast__item {
+    border-radius: 10px;
+    min-height: 3.5rem;
+    height: 3.5rem;
+    width: 100%;
+}
+
+.v-toast .v-toast__item--success {
+    background-color: #0ab659;
+}

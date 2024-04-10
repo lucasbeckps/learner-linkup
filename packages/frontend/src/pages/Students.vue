@@ -79,8 +79,14 @@
       </v-table>
     </div>
   </v-sheet>
-  <RegisterModal @mounted="({ openModalFn }) => (openRegisterModal = openModalFn)" />
-  <DeleteDialog @mounted="({ openDialogFn }) => (openDeleteDialog = openDialogFn)" />
+  <RegisterModal
+    @mounted="({ openModalFn }) => (openRegisterModal = openModalFn)"
+    @save="reloadStudents"
+  />
+  <DeleteDialog
+    @mounted="({ openDialogFn }) => (openDeleteDialog = openDialogFn)"
+    @delete="reloadStudents"
+  />
 </template>
 
 <script setup lang="ts">
@@ -96,7 +102,7 @@ const openDeleteDialog = ref(() => {})
 const search = ref('')
 const queryClient = useQueryClient()
 
-const fetchStudents = async (): Promise<StudentResponseDto[]> => {
+async function fetchStudents(): Promise<StudentResponseDto[]> {
   const { data } = await api.get('students', {
     params: {
       search: search.value
@@ -106,6 +112,10 @@ const fetchStudents = async (): Promise<StudentResponseDto[]> => {
     ...student,
     created_at: new Date(student.created_at)
   }))
+}
+
+async function reloadStudents() {
+  await queryClient.invalidateQueries({ queryKey: ['students'] })
 }
 
 const {

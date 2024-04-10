@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialogOpen" max-width="500">
-    <v-card title="Confirmar remoção">
+    <v-card class="rounded-lg" title="Confirmar remoção">
       <v-card-text>
         <v-row>
           <v-col>
@@ -25,10 +25,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { StudentRegisterDto } from '@backend/modules/student/dto/student-register.dto'
 import { StudentEditDto } from '@backend/modules/student/dto/student-edit.dto'
 import { StudentResponseDto } from '@backend/modules/student/dto/student-response.dto'
 import api from '@frontend/services/api'
+import { useToast } from 'vue-toast-notification'
+
+const $toast = useToast()
+const emit = defineEmits(['mounted', 'delete'])
 
 const dialogOpen = ref(false)
 const studentEntity = ref<StudentEditDto>(null)
@@ -43,11 +46,19 @@ function closeDialog() {
 }
 
 async function doDelete() {
-  await api.delete(`students/${studentEntity.value.student_id}`)
-  closeDialog()
+  try {
+    await api.delete(`students/${studentEntity.value.student_id}`)
+    $toast.success('Aluno removido com sucesso!')
+    emit('delete', studentEntity.value)
+    closeDialog()
+  } catch (err) {
+    if (Array.isArray(err?.response?.data?.message)) {
+      err.response.data.message.forEach((message: string) => $toast.error(message))
+    } else {
+      $toast.error('Erro ao remover aluno')
+    }
+  }
 }
-
-const emit = defineEmits(['mounted'])
 
 onMounted(() => {
   emit('mounted', { openDialogFn: openDialog })
