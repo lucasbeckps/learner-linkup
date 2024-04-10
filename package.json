@@ -9,7 +9,8 @@
   "packageManager": "yarn@4.1.1",
   "private": true,
   "scripts": {
-    "dev": "concurrently --timings -n front,api --kill-others-on-fail \"yarn workspace frontend dev\" \"yarn workspace backend start:dev --preserveWatchOutput\""
+    "dev": "concurrently --timings -n front,api --kill-others-on-fail \"yarn workspace frontend dev\" \"yarn workspace backend start:dev --preserveWatchOutput\"",
+    "migrate": "yarn workspace backend migration:run"
   },
   "workspaces": [
     "packages/*"
