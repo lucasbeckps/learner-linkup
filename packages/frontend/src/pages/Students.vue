@@ -1,22 +1,22 @@
 <template>
   <v-sheet class="pa-3 pl-4" style="border-radius: 7px 7px 0 0" elevation="2" border>
-    <v-row no-gutters>
-      <v-col cols="auto" class="mr-4 d-flex align-self-center justify-center">
+    <v-row class="ga-3 mb-4 mb-md-0" no-gutters>
+      <v-col cols="12" md="auto" class="ml-1 ml-md-0 d-flex align-self-center">
         <div class="text-h6">Alunos</div>
       </v-col>
-      <v-col class="d-flex align-self-center justify-center">
+      <v-col cols="12" xs="12" md="">
         <v-text-field
           v-model="search"
           variant="plain"
           hide-details
-          class="student-search-input rounded border mr-4"
+          class="student-search-input rounded border"
           placeholder="Digite sua busca"
         />
       </v-col>
-      <v-col cols="auto" class="d-flex align-self-center justify-center">
+      <v-col cols="12" xs="12" md="auto">
         <v-btn
           @click="openRegisterModal('new')"
-          class="add-student-button"
+          class="add-student-button w-100"
           color="secondary"
           border
           elevation="0"
@@ -77,6 +77,48 @@
           </tr>
         </tbody>
       </v-table>
+      <v-list class="d-md-none" :items="students" item-props>
+        <template v-slot:title="student">
+          <v-list-item-title class="d-flex">
+            <span style="flex: auto">{{ student.item.name }}</span>
+            <span class="text-grey-lighten-1">
+              <v-list-item-action style="height: 25px">
+                <v-btn
+                  @click="openRegisterModal(student.item)"
+                  class="custom-list-buttom text-blue-grey-darken-1"
+                  style="font-size: 0.8rem"
+                  flat
+                  icon
+                >
+                  <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn
+                  @click="openDeleteDialog(student.item)"
+                  class="custom-list-buttom delete-button text-blue-grey-darken-1"
+                  style="font-size: 0.8rem"
+                  flat
+                  icon
+                >
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </v-list-item-action>
+            </span>
+          </v-list-item-title>
+        </template>
+        <template v-slot:subtitle="student">
+          <v-row class="text-white">
+            <v-col class="pb-0" cols="12" md="4"> RA: {{ student.item.ra }} </v-col>
+            <v-col class="pb-0 pt-1" cols="12" md="4">CPF: {{ student.item.cpf }} </v-col>
+            <v-col class="pb-0 pt-1" cols="12" md="4">E-mail: {{ student.item.email }} </v-col>
+            <v-col class="pb-8 pt-1" cols="12" md="4">
+              {{ student.item.created_at.getDate() }}/{{
+                student.item.created_at.getMonth() + 1
+              }}/{{ student.item.created_at.getFullYear() }}
+              {{ student.item.created_at.getHours() }}:{{ student.item.created_at.getMinutes() }}
+            </v-col>
+          </v-row>
+        </template>
+      </v-list>
     </div>
   </v-sheet>
   <RegisterModal

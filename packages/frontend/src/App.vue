@@ -5,17 +5,14 @@
         <v-img gradient="to right, rgba(19,84,122,.8), rgba(0,160,166,.8)"></v-img>
       </template>
 
-      <RouterLink to="/" class="navlink">
-        <v-list-item
-          class="custom-logo-list-item"
-          prepend-avatar="@/assets/logo-min.svg"
-          title="Learner Linkup"
-        ></v-list-item>
+      <RouterLink to="/" class="header-logo navlink">
+        <v-list-item class="custom-logo" prepend-avatar="@/assets/logo-min.svg" />
+        <p class="custom-title d-none d-sm-flex">Learner Linkup</p>
       </RouterLink>
 
       <v-spacer></v-spacer>
       <v-btn class="pr-2 pl-2 mr-2 rounded-lg">
-        <span class="pr-3 d-none d-sm-flex">Lucas Beck</span>
+        <span class="pr-3">Lucas Beck</span>
         <v-icon style="font-size: 2rem">mdi-account-circle</v-icon>
       </v-btn>
 
@@ -83,12 +80,16 @@ import './global.css'
 .bottom-navlink.active {
   background-color: rgba(var(--v-theme-on-surface), 0.1);
 }
-.custom-logo-list-item {
-  padding: 0 0.5rem !important;
+.header-logo {
+  display: flex;
 }
-.custom-logo-list-item .v-list-item-title {
+.header-logo .custom-logo {
+  padding: 0 0 0 0.5rem;
+}
+.header-logo .custom-title {
   font-weight: 300;
   font-size: 1.5rem;
+  line-height: 3rem;
 }
 .custom-toggle-button {
   font-size: 0.7rem;
