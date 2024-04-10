@@ -6,11 +6,12 @@
       </v-col>
       <v-col cols="12" xs="12" md="">
         <v-text-field
+          v-if="!isPending && students.length"
           v-model="search"
           variant="plain"
           hide-details
           class="student-search-input rounded border"
-          placeholder="Digite sua busca"
+          placeholder="Busque por nome, registro acadêmico, CPF ou e-mail"
         />
       </v-col>
       <v-col cols="12" xs="12" md="auto">
@@ -31,8 +32,14 @@
       <v-skeleton-loader type="table-heading" />
       <v-skeleton-loader type="table-tbody" class="mb-2" style="transform: scaleY(-1)" />
     </div>
-    <div v-else-if="isError">{{ error.message }}</div>
-    <div v-else class="rounded">
+    <div v-else-if="error" class="pl-10 pr-10">
+      <v-img style="height: 200px; margin: 3rem 0 1rem 0" src="@frontend/assets/cup.svg" />
+      <p class="text-h2 text-md-h1 text-center">Oops!</p>
+      <p class="text-md-h6 mt-8 mb-16 text-center">
+        Parece que o servidor está enfrentando problemas 😢
+      </p>
+    </div>
+    <div v-else-if="students.length" class="rounded">
       <v-table class="d-none d-md-flex">
         <thead>
           <tr>
@@ -124,6 +131,18 @@
         </template>
       </v-list>
     </div>
+    <div v-else class="pl-10 pr-10">
+      <v-img style="height: 200px; margin: 3rem 0 1rem 0" src="@frontend/assets/scene.svg" />
+      <p class="text-h4 text-center">Ninguém por aqui!</p>
+      <p class="mt-2 mb-4 text-center">
+        Parece que ainda não há alunos cadastrados. Que tal adicionar um?
+      </p>
+      <v-col class="d-flex justify-center mb-16">
+        <v-btn @click="openRegisterModal('new')" color="secondary" border elevation="0">
+          Adicionar aluno
+        </v-btn>
+      </v-col>
+    </div>
   </v-sheet>
   <RegisterModal
     @mounted="({ openModalFn }) => (openRegisterModal = openModalFn)"
@@ -172,6 +191,7 @@ const {
 }: QueryState<StudentResponseDto[]> = useQuery({
   queryKey: ['students'],
   refetchOnWindowFocus: true,
+  retryDelay: 500,
   queryFn: fetchStudents
 })
 
