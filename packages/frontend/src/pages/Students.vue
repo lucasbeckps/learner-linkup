@@ -36,7 +36,7 @@
       <v-table class="d-none d-md-flex">
         <thead>
           <tr>
-            <th class="ra-column text-left">Registro Acadêmico</th>
+            <th class="text-left">Registro Acadêmico</th>
             <th class="text-left">Nome</th>
             <th class="text-left">CPF</th>
             <th class="text-left">E-mail</th>
@@ -46,17 +46,19 @@
         </thead>
         <tbody>
           <tr v-for="item in students" :key="item.student_id">
-            <td>{{ item.ra }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.cpf }}</td>
+            <td class="ra-column">{{ item.ra }}</td>
+            <td class="text-no-wrap" :title="item.name">
+              {{ item.name.substring(0, 40) }}{{ item.name.length > 40 ? '...' : '' }}
+            </td>
+            <td class="cpf-column">{{ item.cpf }}</td>
             <td>{{ item.email }}</td>
-            <td>
+            <td class="date-column">
               {{ item.created_at.getDate() }}/{{ item.created_at.getMonth() + 1 }}/{{
                 item.created_at.getFullYear()
               }}
               {{ item.created_at.getHours() }}:{{ item.created_at.getMinutes() }}
             </td>
-            <td class="text-right">
+            <td class="text-right text-no-wrap">
               <v-btn
                 @click="openRegisterModal(item)"
                 class="custom-list-buttom text-blue-grey-darken-1"
@@ -80,7 +82,9 @@
       <v-list class="d-md-none" :items="students" item-props>
         <template v-slot:title="student">
           <v-list-item-title class="d-flex">
-            <span style="flex: auto">{{ student.item.name }}</span>
+            <span class="text-truncate" style="flex: auto" :title="student.item.name"
+              >{{ student.item.name }}
+            </span>
             <span class="text-grey-lighten-1">
               <v-list-item-action style="height: 25px">
                 <v-btn
@@ -188,7 +192,19 @@ watch(
 }
 
 .ra-column {
+  min-width: 180px;
   width: 180px;
+}
+
+.cpf-column {
+  min-width: 130px;
+}
+
+.date-column {
+  min-width: 150px;
+}
+
+.actions-column {
 }
 
 .add-student-button {
