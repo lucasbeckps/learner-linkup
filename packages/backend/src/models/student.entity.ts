@@ -27,7 +27,6 @@ export class StudentModel {
 
   @Column()
   @Index({ unique: true, where: 'deleted_at IS NULL' })
-  // TODO: Add validation for CPF
   cpf: string;
 
   @Column()
