@@ -15,6 +15,7 @@
     "eslint-plugin-vue": "^9.24.1",
     "find-yarn-workspace-root": "^2.0.0",
     "lodash": "^4.17.21",
+    "maska": "^2.1.11",
     "prettier": "^3.2.5",
     "roboto-fontface": "*",
     "vue": "^3.4.21",

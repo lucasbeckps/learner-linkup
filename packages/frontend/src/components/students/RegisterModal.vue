@@ -7,49 +7,72 @@
         :title="
           studentEntity.student_id
             ? `Editando ${studentEntity?.name}`
-            : studentEntity.name
+            : studentEntity.name?.length > 2
               ? `Adicionando ${studentEntity.name}`
               : 'Adicionar aluno'
         "
       >
-        <v-card-text>
-          <v-row dense>
-            <v-col cols="12" md="4" sm="12">
-              <v-text-field
-                label="Registro Acadêmico"
-                v-model="studentEntity.ra"
-                :disabled="!!studentEntity.student_id"
-                required
-              ></v-text-field>
-            </v-col>
+        <v-form v-model="isFormValid">
+          <v-card-text>
+            <v-row dense>
+              <v-col cols="12" md="4" sm="12">
+                <v-text-field
+                  label="Registro Acadêmico*"
+                  v-model="studentEntity.ra"
+                  :rules="raRules"
+                  :disabled="!!studentEntity.student_id"
+                  required
+                ></v-text-field>
+              </v-col>
 
-            <v-col cols="12" md="8" sm="12">
-              <v-text-field
-                label="CPF"
-                v-model="studentEntity.cpf"
-                :disabled="!!studentEntity.student_id"
-                required
-              ></v-text-field>
-            </v-col>
+              <v-col cols="12" md="8" sm="12">
+                <v-text-field
+                  label="CPF*"
+                  v-model="studentEntity.cpf"
+                  v-maska:[cpfMaskOptions]
+                  :rules="cpfRules"
+                  :disabled="!!studentEntity.student_id"
+                  required
+                ></v-text-field>
+              </v-col>
 
-            <v-col cols="12" md="6" sm="12">
-              <v-text-field label="Nome" v-model="studentEntity.name" required></v-text-field>
-            </v-col>
+              <v-col cols="12" md="6" sm="12">
+                <v-text-field
+                  label="Nome*"
+                  v-model="studentEntity.name"
+                  :rules="nameRules"
+                  required
+                ></v-text-field>
+              </v-col>
 
-            <v-col cols="12" md="6" sm="12">
-              <v-text-field label="E-mail" v-model="studentEntity.email" required></v-text-field>
-            </v-col>
-          </v-row>
+              <v-col cols="12" md="6" sm="12">
+                <v-text-field
+                  label="E-mail*"
+                  v-model="studentEntity.email"
+                  :rules="emailRules"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-          <small class="text-caption text-medium-emphasis">*campos obrigatórios</small>
-        </v-card-text>
+            <small class="text-caption text-medium-emphasis"
+              >Todos os campos são obrigatórios</small
+            >
+          </v-card-text>
+        </v-form>
 
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text="Cancelar" variant="plain" @click="closeModal"></v-btn>
-          <v-btn color="primary" text="Salvar" variant="tonal" @click="save"></v-btn>
+          <v-btn
+            color="primary"
+            text="Salvar"
+            variant="tonal"
+            @click="save"
+            :disabled="!isFormValid"
+          ></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -58,15 +81,32 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { vMaska } from 'maska'
 import { StudentRegisterDto } from '@backend/modules/student/dto/student-register.dto'
 import { StudentEditDto } from '@backend/modules/student/dto/student-edit.dto'
 import { StudentResponseDto } from '@backend/modules/student/dto/student-response.dto'
 import api from '@frontend/services/api'
 import { useToast } from 'vue-toast-notification'
+import {
+  fieldIsCpf,
+  fieldIsEmail,
+  fieldMaxLength,
+  fieldMinLength,
+  fieldRequired
+} from '@frontend/utils/formValidation'
 
 const $toast = useToast()
-const emit = defineEmits(['mounted', 'save', 'cancel'])
 
+// Form validation
+const isFormValid = ref(false)
+const cpfMaskOptions = { mask: '###.###.###-##' }
+const raRules = [fieldRequired('RA'), fieldMaxLength('Registro Acadêmico', 20)]
+const cpfRules = [fieldRequired('CPF'), fieldIsCpf('CPF')]
+const nameRules = [fieldRequired('Nome'), fieldMinLength('Nome', 3), fieldMaxLength('Nome', 80)]
+const emailRules = [fieldRequired('E-mail'), fieldMaxLength('E-mail', 80), fieldIsEmail('E-mail')]
+
+// Modal state
+const emit = defineEmits(['mounted', 'save', 'cancel'])
 const modalOpen = ref(false)
 const studentEntity = ref<StudentRegisterDto | StudentEditDto>(null)
 

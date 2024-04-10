@@ -4510,6 +4510,7 @@ __metadata:
     eslint-plugin-vue: "npm:^9.24.1"
     find-yarn-workspace-root: "npm:^2.0.0"
     lodash: "npm:^4.17.21"
+    maska: "npm:^2.1.11"
     prettier: "npm:^3.2.5"
     roboto-fontface: "npm:*"
     sass: "npm:^1.71.1"
@@ -6049,6 +6050,13 @@ __metadata:
   dependencies:
     tmpl: "npm:1.0.5"
   checksum: 10c0/b0e6e599780ce6bab49cc413eba822f7d1f0dfebd1c103eaa3785c59e43e22c59018323cf9e1708f0ef5329e94a745d163fcbb6bff8e4c6742f9be9e86f3500c
+  languageName: node
+  linkType: hard
+
+"maska@npm:^2.1.11":
+  version: 2.1.11
+  resolution: "maska@npm:2.1.11"
+  checksum: 10c0/12fa5d0e05dca477b5bc6d60be9fd68fcf128d7b3ebaa94e420b4395b8e2d1064f375952870075794f094054c7035dbdc0fb9f64be43df2903d8640327399ff3
   languageName: node
   linkType: hard
 
