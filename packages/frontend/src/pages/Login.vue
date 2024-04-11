@@ -73,9 +73,16 @@
               </v-btn>
             </v-col>
             <v-col cols="12" xs="12" sm="auto" md="auto">
-              <v-btn class="w-100" type="submit" color="secondary" value="log in">{{
-                isRegister ? 'Cadastrar' : 'Entrar'
-              }}</v-btn>
+              <v-btn
+                class="w-100"
+                type="submit"
+                color="secondary"
+                value="log in"
+                :disabled="isLoading"
+              >
+                {{ !isLoading ? (isRegister ? 'Cadastrar' : 'Entrar') : null }}
+                <v-icon v-if="isLoading" class="mdi-spin">mdi-loading</v-icon>
+              </v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -99,6 +106,7 @@ const $toast = useToast()
 
 const isRegister = ref(false)
 const isValid = ref(false)
+const isLoading = ref(false)
 
 const name = ref('')
 const email = ref('')
@@ -124,6 +132,7 @@ async function loadAuthToken() {
 
 async function login() {
   try {
+    isLoading.value = true
     await loadAuthToken()
     location.href = '/'
   } catch (err) {
@@ -132,11 +141,14 @@ async function login() {
     } else {
       $toast.error('Erro ao fazer login')
     }
+  } finally {
+    isLoading.value = false
   }
 }
 
 async function register() {
   try {
+    isLoading.value = true
     await api.post('/user/create', {
       name: name.value,
       email: email.value,
@@ -151,6 +163,8 @@ async function register() {
     } else {
       $toast.error('Erro ao fazer cadastro')
     }
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
