@@ -6,7 +6,7 @@
       </v-col>
       <v-col cols="12" xs="12" md="">
         <v-text-field
-          v-if="!isPending && students.length"
+          v-if="!isPending && students?.length"
           v-model="search"
           variant="plain"
           hide-details
@@ -160,6 +160,7 @@ import api, { QueryState } from '@frontend/services/api'
 import { StudentResponseDto } from '@backend/modules/student/dto/student-response.dto'
 import { ref, watch } from 'vue'
 import { debounce } from 'lodash'
+import { isAuthTokenValid } from '@frontend/utils/auth'
 
 const openRegisterModal = ref(() => {})
 const openDeleteDialog = ref(() => {})
@@ -168,6 +169,8 @@ const search = ref('')
 const queryClient = useQueryClient()
 
 async function fetchStudents(): Promise<StudentResponseDto[]> {
+  if (!isAuthTokenValid()) location.reload()
+
   const { data } = await api.get('students', {
     params: {
       search: search.value
@@ -191,7 +194,6 @@ const {
 }: QueryState<StudentResponseDto[]> = useQuery({
   queryKey: ['students'],
   refetchOnWindowFocus: true,
-  retryDelay: 500,
   queryFn: fetchStudents
 })
 

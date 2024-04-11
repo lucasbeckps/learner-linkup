@@ -17,7 +17,10 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn text @click="closeDialog">Cancelar</v-btn>
-        <v-btn color="error" text @click="doDelete"><strong>Remover</strong></v-btn>
+        <v-btn class="delete-button" color="error" text @click="doDelete">
+          <v-icon v-if="isLoading" class="mdi-spin">mdi-loading</v-icon>
+          <strong v-else>Remover</strong>
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -29,14 +32,18 @@ import { StudentEditDto } from '@backend/modules/student/dto/student-edit.dto'
 import { StudentResponseDto } from '@backend/modules/student/dto/student-response.dto'
 import api from '@frontend/services/api'
 import { useToast } from 'vue-toast-notification'
+import { isAuthTokenValid } from '@frontend/utils/auth'
 
 const $toast = useToast()
 const emit = defineEmits(['mounted', 'delete'])
 
 const dialogOpen = ref(false)
+const isLoading = ref(false)
 const studentEntity = ref<StudentEditDto>(null)
 
 function openDialog(requestedStudent: StudentResponseDto) {
+  if (!isAuthTokenValid()) location.reload()
+
   dialogOpen.value = true
   studentEntity.value = new StudentEditDto(requestedStudent)
 }
@@ -47,16 +54,20 @@ function closeDialog() {
 
 async function doDelete() {
   try {
+    isLoading.value = true
     await api.delete(`students/${studentEntity.value.student_id}`)
     $toast.success('Aluno removido com sucesso!')
     emit('delete', studentEntity.value)
     closeDialog()
   } catch (err) {
-    if (Array.isArray(err?.response?.data?.message)) {
+    if (err.response?.status === 401) location.reload()
+    else if (Array.isArray(err?.response?.data?.message)) {
       err.response.data.message.forEach((message: string) => $toast.error(message))
     } else {
       $toast.error('Erro ao remover aluno')
     }
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -64,3 +75,9 @@ onMounted(() => {
   emit('mounted', { openDialogFn: openDialog })
 })
 </script>
+
+<style>
+.delete-button {
+  width: 100px;
+}
+</style>

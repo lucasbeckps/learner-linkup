@@ -67,12 +67,15 @@
           <v-spacer></v-spacer>
           <v-btn text="Cancelar" variant="plain" @click="closeModal"></v-btn>
           <v-btn
+            class="save-button"
             color="primary"
-            text="Salvar"
             variant="tonal"
             @click="save"
             :disabled="!isFormValid"
-          ></v-btn>
+          >
+            <v-icon v-if="isLoading" class="mdi-spin">mdi-loading</v-icon>
+            <template v-else>Salvar</template>
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -94,6 +97,7 @@ import {
   fieldMinLength,
   fieldRequired
 } from '@frontend/utils/formValidation'
+import { isAuthTokenValid } from '@frontend/utils/auth'
 
 const $toast = useToast()
 
@@ -108,9 +112,12 @@ const emailRules = [fieldRequired('E-mail'), fieldMaxLength('E-mail', 80), field
 // Modal state
 const emit = defineEmits(['mounted', 'save', 'cancel'])
 const modalOpen = ref(false)
+const isLoading = ref(false)
 const studentEntity = ref<StudentRegisterDto | StudentEditDto>(null)
 
 function openModal(requestedStudent: StudentResponseDto | 'new') {
+  if (!isAuthTokenValid()) location.reload()
+
   modalOpen.value = true
   studentEntity.value =
     typeof requestedStudent === 'object'
@@ -130,6 +137,7 @@ function closeModal() {
 
 async function save() {
   try {
+    isLoading.value = true
     if (studentEntity.value.student_id) {
       await api.put(`students/${studentEntity.value.student_id}`, studentEntity.value)
     } else {
@@ -141,11 +149,14 @@ async function save() {
     studentEntity.value = null
     closeModal()
   } catch (err) {
-    if (Array.isArray(err?.response?.data?.message)) {
+    if (err.response?.status === 401) location.reload()
+    else if (Array.isArray(err?.response?.data?.message)) {
       err.response.data.message.forEach((message: string) => $toast.error(message))
     } else {
       $toast.error('Erro ao salvar aluno')
     }
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -153,3 +164,9 @@ onMounted(() => {
   emit('mounted', { openModalFn: openModal })
 })
 </script>
+
+<style>
+.save-button {
+  width: 100px;
+}
+</style>

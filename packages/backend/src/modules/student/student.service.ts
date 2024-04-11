@@ -57,13 +57,18 @@ export class StudentService {
     return new StudentResponseDto(student);
   }
 
-  async createStudent(student: StudentRegisterDto): Promise<StudentModel> {
+  async createStudent(
+    student: StudentRegisterDto,
+    userId: number,
+  ): Promise<StudentModel> {
     const studentModel = new StudentModel();
 
     studentModel.name = student.name;
     studentModel.ra = student.ra;
     studentModel.cpf = student.cpf;
     studentModel.email = student.email;
+    studentModel.created_by = userId;
+    studentModel.updated_by = userId;
 
     return this.studentRepository.save(studentModel);
   }
@@ -71,6 +76,7 @@ export class StudentService {
   async editStudent(
     studentId: number,
     student: StudentEditDto,
+    userId: number,
   ): Promise<StudentModel> {
     const studentModel = await this.studentRepository
       .createQueryBuilder('student')
@@ -79,11 +85,19 @@ export class StudentService {
 
     studentModel.name = student.name;
     studentModel.email = student.email;
+    studentModel.updated_by = userId;
 
     return this.studentRepository.save(studentModel);
   }
 
-  async deleteStudent(studentId: number) {
+  async deleteStudent(studentId: number, userId) {
+    await this.studentRepository
+      .createQueryBuilder('student')
+      .update({
+        updated_by: userId,
+      })
+      .where({ student_id: studentId })
+      .execute();
     return this.studentRepository
       .createQueryBuilder('student')
       .softDelete()

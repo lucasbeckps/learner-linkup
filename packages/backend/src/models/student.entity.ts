@@ -34,9 +34,19 @@ export class StudentModel {
   @IsEmail()
   email: string;
 
+  @Column()
+  created_by: number;
+
+  @Column()
+  updated_by: number;
+
   @ManyToOne(() => UserModel)
   @JoinColumn({ name: 'created_by' })
-  created_by: UserModel;
+  createdBy: UserModel;
+
+  @ManyToOne(() => UserModel)
+  @JoinColumn({ name: 'updated_by' })
+  updatedBy: UserModel;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;

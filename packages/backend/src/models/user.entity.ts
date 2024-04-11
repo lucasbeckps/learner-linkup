@@ -9,16 +9,24 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { StudentModel } from '@backend/models/student.entity';
+import { IsEmail } from 'class-validator';
 
 @Entity({ name: 'user' })
-@Index(['name'], { where: 'deleted_at IS NULL' })
 export class UserModel {
   @PrimaryGeneratedColumn()
-  @Index(['user_id'], { where: 'deleted_at IS NULL' })
+  @Index({ where: 'deleted_at IS NULL' })
   user_id: number;
 
   @Column()
   name: string;
+
+  @Column()
+  @IsEmail()
+  @Index({ unique: true, where: 'deleted_at IS NULL' })
+  email: string;
+
+  @Column()
+  password: string;
 
   @OneToMany(() => StudentModel, (student) => student.created_by)
   students: StudentModel[];
