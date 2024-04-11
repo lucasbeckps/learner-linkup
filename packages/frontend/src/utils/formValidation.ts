@@ -32,3 +32,14 @@ export function fieldIsCpf(field: string) {
     return `${field} precisa ser um CPF válido`
   }
 }
+
+export function fieldIsStrongPassword(field: string) {
+  return (value) => {
+    if (value?.length < 8) return `${field} precisa ter no mínimo 8 caracteres`
+    if (!/[A-Z]/.test(value)) return `${field} precisa ter pelo menos uma letra maiúscula`
+    if (!/[a-z]/.test(value)) return `${field} precisa ter pelo menos uma letra minúscula`
+    if (!/[0-9]/.test(value)) return `${field} precisa ter pelo menos um número`
+    if (!/[^A-Za-z0-9]/.test(value)) return `${field} precisa ter pelo menos um caractere especial`
+    return true
+  }
+}

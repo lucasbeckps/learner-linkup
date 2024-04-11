@@ -23,6 +23,18 @@ export class UserRegisterDto {
 
   @IsString({ message: 'O valor do campo Senha é inválido' })
   @IsNotEmpty({ message: 'O campo Senha é obrigatório' })
-  @IsStrongPassword()
+  @IsStrongPassword(
+    {
+      minLength: 8,
+      minUppercase: 1,
+      minLowercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    },
+    {
+      message:
+        'A senha deve conter no mínimo 8 caracteres, 1 letra maiúscula, 1 letra minúscula, 1 número e 1 caractere especial',
+    },
+  )
   password: string;
 }

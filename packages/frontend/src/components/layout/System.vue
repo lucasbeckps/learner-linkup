@@ -19,7 +19,7 @@
         </v-btn>
       </template>
       <v-list>
-        <v-btn prepend-icon="mdi-logout" flat @click="logout">Logout</v-btn>
+        <v-btn class="w-100" prepend-icon="mdi-logout" flat @click="logout">Logout</v-btn>
       </v-list>
     </v-menu>
 

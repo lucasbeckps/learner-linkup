@@ -23,7 +23,9 @@ export class AuthController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
+  async signIn(@Body() signInDto: Record<string, any>) {
+    // Delay to prevent brute force attack
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
