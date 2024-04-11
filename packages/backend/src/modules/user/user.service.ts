@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { UserModel } from '@backend/models/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRegisterDto } from '@backend/modules/user/dto/user-register.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -15,14 +16,14 @@ export class UserService {
     return this.userRepository
       .createQueryBuilder('user')
       .where('user.email = :email', { email })
-      .getOne();
+      .getOneOrFail();
   }
 
   async create(user: UserRegisterDto): Promise<UserModel> {
     const userModel = new UserModel();
 
     userModel.email = user.email;
-    userModel.password = user.password;
+    userModel.password = await bcrypt.hash(user.password, 10);
     userModel.name = user.name;
 
     return this.userRepository.save(userModel);
