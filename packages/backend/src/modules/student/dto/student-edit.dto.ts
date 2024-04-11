@@ -11,31 +11,6 @@ export class StudentEditDto {
   @Expose()
   name: string;
 
-  @IsString({ message: 'O valor do campo Registro Acadêmico é inválido' })
-  @IsNotEmpty({ message: 'O campo Registro Acadêmico é obrigatório' })
-  @IsUnique(
-    {
-      tableName: 'student',
-      column: 'ra',
-      bypassIfEqual: 'student_id',
-    },
-    { message: 'O RA informado já está em uso.' },
-  )
-  @Expose()
-  readonly ra: string;
-
-  @IsNotEmpty({ message: 'O campo CPF é obrigatório' })
-  @IsUnique(
-    {
-      tableName: 'student',
-      column: 'cpf',
-      bypassIfEqual: 'student_id',
-    },
-    { message: 'O CPF informado já está em uso.' },
-  )
-  @Expose()
-  readonly cpf: string;
-
   @IsEmail(undefined, { message: 'O campo E-mail deve ser um email válido' })
   @IsUnique(
     {
