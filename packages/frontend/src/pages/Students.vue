@@ -6,7 +6,7 @@
       </v-col>
       <v-col cols="12" xs="12" md="">
         <v-text-field
-          v-if="!isPending && students.length"
+          v-if="!isPending && students?.length"
           v-model="search"
           variant="plain"
           hide-details
@@ -191,7 +191,6 @@ const {
 }: QueryState<StudentResponseDto[]> = useQuery({
   queryKey: ['students'],
   refetchOnWindowFocus: true,
-  retryDelay: 500,
   queryFn: fetchStudents
 })
 

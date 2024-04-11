@@ -13,5 +13,6 @@ declare module 'vue' {
     RegisterModal: typeof import('./src/components/students/RegisterModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    System: typeof import('./src/components/layout/System.vue')['default']
   }
 }
