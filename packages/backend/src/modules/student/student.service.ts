@@ -79,7 +79,6 @@ export class StudentService {
 
     studentModel.name = student.name;
     studentModel.email = student.email;
-    studentModel.updated_at = new Date();
 
     return this.studentRepository.save(studentModel);
   }

@@ -38,7 +38,15 @@ export class StudentModel {
   @JoinColumn({ name: 'created_by' })
   created_by: UserModel;
 
-  @CreateDateColumn() created_at: Date;
-  @UpdateDateColumn() updated_at: Date;
-  @DeleteDateColumn() deleted_at?: Date;
+  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  created_at: Date;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  updated_at: Date;
+
+  @DeleteDateColumn({ type: 'timestamp' }) deleted_at?: Date;
 }
