@@ -7,7 +7,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mdi/font": "6.2.95",
+    "@mdi/font": "7.4.47",
     "@tanstack/vue-query": "^5.29.0",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
