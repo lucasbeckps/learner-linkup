@@ -9,6 +9,6 @@ export class UserSeeder1712861994089 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DELETE FROM "user" WHERE user_id IN (1)`);
+    await queryRunner.query(`DELETE FROM public."user" WHERE user_id IN (1)`);
   }
 }

@@ -16,6 +16,7 @@ import { StudentService } from '@backend/modules/student/student.service';
 import { StudentResponseDto } from '@backend/modules/student/dto/student-response.dto';
 import { StudentRegisterDto } from '@backend/modules/student/dto/student-register.dto';
 import { StudentEditDto } from '@backend/modules/student/dto/student-edit.dto';
+import { GetAuthUser } from '@backend/modules/user/get-auth-user.decorator';
 
 @Controller('students')
 export default class StudentController {
@@ -34,8 +35,12 @@ export default class StudentController {
   @UsePipes(ValidationPipe)
   async createStudent(
     @Body() student: StudentRegisterDto,
+    @GetAuthUser() user,
   ): Promise<StudentResponseDto> {
-    const createdStudent = await this.studentService.createStudent(student);
+    const createdStudent = await this.studentService.createStudent(
+      student,
+      user.sub,
+    );
     return this.studentService.normalizeStudent(createdStudent);
   }
 
@@ -44,16 +49,18 @@ export default class StudentController {
   async editStudent(
     @Body() student: StudentEditDto,
     @Param('studentId') studentId: number,
+    @GetAuthUser() user,
   ): Promise<StudentResponseDto> {
     const editedStudent = await this.studentService.editStudent(
       studentId,
       student,
+      user.sub,
     );
     return this.studentService.normalizeStudent(editedStudent);
   }
 
   @Delete(':studentId')
-  deleteStudent(@Param('studentId') studentId: number) {
-    return this.studentService.deleteStudent(studentId);
+  deleteStudent(@Param('studentId') studentId: number, @GetAuthUser() user) {
+    return this.studentService.deleteStudent(studentId, user.sub);
   }
 }
