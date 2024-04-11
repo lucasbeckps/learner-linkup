@@ -97,6 +97,7 @@ import {
   fieldMinLength,
   fieldRequired
 } from '@frontend/utils/formValidation'
+import { isAuthTokenValid } from '@frontend/utils/auth'
 
 const $toast = useToast()
 
@@ -115,6 +116,8 @@ const isLoading = ref(false)
 const studentEntity = ref<StudentRegisterDto | StudentEditDto>(null)
 
 function openModal(requestedStudent: StudentResponseDto | 'new') {
+  if (!isAuthTokenValid()) location.reload()
+
   modalOpen.value = true
   studentEntity.value =
     typeof requestedStudent === 'object'
@@ -146,7 +149,8 @@ async function save() {
     studentEntity.value = null
     closeModal()
   } catch (err) {
-    if (Array.isArray(err?.response?.data?.message)) {
+    if (err.response?.status === 401) location.reload()
+    else if (Array.isArray(err?.response?.data?.message)) {
       err.response.data.message.forEach((message: string) => $toast.error(message))
     } else {
       $toast.error('Erro ao salvar aluno')

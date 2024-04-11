@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 import Alunos from '@frontend/pages/Students.vue'
 import Login from '@frontend/pages/Login.vue'
+import { isAuthTokenValid } from '@frontend/utils/auth'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -41,10 +42,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('token')
-  if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated) {
+  if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthTokenValid()) {
     next({ name: 'login' })
-  } else if (to.matched.some((record) => record.meta.guestOnly) && isAuthenticated) {
+  } else if (to.matched.some((record) => record.meta.guestOnly) && isAuthTokenValid()) {
     next({ name: 'home' }) // Redirecionar para home se tentar acessar login estando logado
   } else {
     next()

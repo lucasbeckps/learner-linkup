@@ -32,6 +32,7 @@ import { StudentEditDto } from '@backend/modules/student/dto/student-edit.dto'
 import { StudentResponseDto } from '@backend/modules/student/dto/student-response.dto'
 import api from '@frontend/services/api'
 import { useToast } from 'vue-toast-notification'
+import { isAuthTokenValid } from '@frontend/utils/auth'
 
 const $toast = useToast()
 const emit = defineEmits(['mounted', 'delete'])
@@ -41,6 +42,8 @@ const isLoading = ref(false)
 const studentEntity = ref<StudentEditDto>(null)
 
 function openDialog(requestedStudent: StudentResponseDto) {
+  if (!isAuthTokenValid()) location.reload()
+
   dialogOpen.value = true
   studentEntity.value = new StudentEditDto(requestedStudent)
 }
@@ -57,7 +60,8 @@ async function doDelete() {
     emit('delete', studentEntity.value)
     closeDialog()
   } catch (err) {
-    if (Array.isArray(err?.response?.data?.message)) {
+    if (err.response?.status === 401) location.reload()
+    else if (Array.isArray(err?.response?.data?.message)) {
       err.response.data.message.forEach((message: string) => $toast.error(message))
     } else {
       $toast.error('Erro ao remover aluno')

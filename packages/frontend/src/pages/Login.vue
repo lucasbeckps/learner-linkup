@@ -127,7 +127,14 @@ async function loadAuthToken() {
     password: password.value
   })
 
+  const { data: userData } = await api.get('/auth/me', {
+    headers: {
+      Authorization: `Bearer ${data.access_token}`
+    }
+  })
+
   localStorage.setItem('token', data.access_token)
+  localStorage.setItem('user', JSON.stringify(userData))
 }
 
 async function login() {

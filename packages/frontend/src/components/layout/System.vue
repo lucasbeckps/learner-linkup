@@ -69,14 +69,13 @@
 import { navigationItems } from '@frontend/plugins/router'
 import DarkModeToggle from '@frontend/components/layout/DarkModeToggle.vue'
 import useDebouncedRef from '@frontend/utils/debounceRef'
-import { computed, onMounted, ref } from 'vue'
-import api from '@frontend/services/api'
+import { computed } from 'vue'
+import { isAuthTokenValid } from '@frontend/utils/auth'
 
 const isDrawerOpen = useDebouncedRef(false, 50)
 
-const user = ref(null)
 const isAuthenticated = computed(() => {
-  return !!localStorage.getItem('token')
+  return isAuthTokenValid()
 })
 
 async function logout() {
@@ -85,16 +84,8 @@ async function logout() {
   location.href = '/'
 }
 
-async function loadUser() {
-  const { data } = await api.get('/auth/me')
-  user.value = data
-  localStorage.setItem('user', JSON.stringify(data))
-}
-
-onMounted(() => {
-  if (isAuthenticated.value) {
-    loadUser()
-  }
+const user = computed(() => {
+  return JSON.parse(localStorage.getItem('user'))
 })
 </script>
 
