@@ -148,7 +148,7 @@
       </p>
     </div>
   </v-sheet>
-  <v-pagination :length="totalPages" v-model="page" class="mt-4" />
+  <v-pagination v-if="totalPages" :length="totalPages" v-model="page" class="mt-4" />
   <RegisterModal
     @mounted="({ openModalFn }) => (openRegisterModal = openModalFn)"
     @save="reloadStudents"
