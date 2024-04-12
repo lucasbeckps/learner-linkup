@@ -37,6 +37,9 @@ yarn install
 
 ### 4. Create a `.env` file: 🔑
 Duplicate the `.env.example` file and rename the copy to `.env`. 
+```sh
+cp .env.example .env
+```
 
 By default, LearnerLinkup is configured to use a PostgreSQL database within a Docker container. 
 Should you prefer utilizing a local PostgreSQL database, adjust the environment variables in the .env file accordingly.
@@ -53,7 +56,7 @@ With this initial setup, the default login credentials will be `user@email.com` 
 
 ## Running the Application ▶️
 Once the installation and setup processes are complete, the application is ready to be launched.
-- Start the project by running yarn dev. This command initiates both the API and the frontend server.
+- Start the project by running `yarn dev`. This command initiates both the API and the frontend server.
 - Access the frontend interface at [http://localhost:3001](http://localhost:3001).
 
 # 🐝🤓 
