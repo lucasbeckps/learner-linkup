@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { IsUnique } from '@backend/validators/isUnique';
 
 export class StudentRegisterDto {
@@ -6,7 +6,7 @@ export class StudentRegisterDto {
   @IsNotEmpty({ message: 'O campo Nome é obrigatório' })
   name: string;
 
-  @IsString({ message: 'O valor do campo Registro Acadêmico é inválido' })
+  @IsNumber({}, { message: 'O valor do campo Registro Acadêmico é inválido' })
   @IsNotEmpty({ message: 'O campo Registro Acadêmico é obrigatório' })
   @IsUnique(
     {
@@ -15,7 +15,7 @@ export class StudentRegisterDto {
     },
     { message: 'O RA informado já está em uso.' },
   )
-  ra: string;
+  ra: number;
 
   @IsNotEmpty({ message: 'O campo CPF é obrigatório' })
   @IsUnique(

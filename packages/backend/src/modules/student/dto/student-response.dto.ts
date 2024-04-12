@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { Exclude, Expose } from 'class-transformer';
 
 export class StudentResponseDto {
@@ -10,10 +10,10 @@ export class StudentResponseDto {
   @Expose()
   readonly name: string;
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
   @Expose()
-  readonly ra: string;
+  readonly ra: number;
 
   @IsNotEmpty()
   @Expose()

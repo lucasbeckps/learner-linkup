@@ -25,7 +25,7 @@ describe('StudentService', () => {
         existingStudent.student_id = 1;
         existingStudent.name = 'Original Name';
         existingStudent.email = 'original@example.com';
-        existingStudent.ra = 'originalRA';
+        existingStudent.ra = 1234;
         existingStudent.cpf = 'originalCPF';
         existingStudent.updated_by = 1;
         return existingStudent;
@@ -60,7 +60,7 @@ describe('StudentService', () => {
     it('should successfully create a student', async () => {
       const studentDto: StudentRegisterDto = {
         name: 'John Doe',
-        ra: '123456',
+        ra: 123456,
         cpf: '00011122233',
         email: 'john@example.com',
       };
