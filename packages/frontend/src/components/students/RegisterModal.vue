@@ -18,8 +18,9 @@
               <v-col cols="12" md="5" sm="12">
                 <v-text-field
                   label="Registro Acadêmico*"
+                  type="number"
                   v-model="studentEntity.ra"
-                  :rules="raRules"
+                  :rules="studentEntity.student_id ? undefined : raRules"
                   :disabled="!!studentEntity.student_id"
                   required
                 ></v-text-field>
@@ -30,7 +31,7 @@
                   label="CPF*"
                   v-model="studentEntity.cpf"
                   v-maska:[cpfMaskOptions]
-                  :rules="cpfRules"
+                  :rules="studentEntity.student_id ? undefined : cpfRules"
                   :disabled="!!studentEntity.student_id"
                   required
                 ></v-text-field>
@@ -93,6 +94,7 @@ import { useToast } from 'vue-toast-notification'
 import {
   fieldIsCpf,
   fieldIsEmail,
+  fieldIsNumber,
   fieldMaxLength,
   fieldMinLength,
   fieldRequired
@@ -104,7 +106,7 @@ const $toast = useToast()
 // Form validation
 const isFormValid = ref(false)
 const cpfMaskOptions = { mask: '###.###.###-##' }
-const raRules = [fieldRequired('RA'), fieldMaxLength('Registro Acadêmico', 20)]
+const raRules = [fieldRequired('RA'), fieldMaxLength('RA', 20), fieldIsNumber('RA')]
 const cpfRules = [fieldRequired('CPF'), fieldIsCpf('CPF')]
 const nameRules = [fieldRequired('Nome'), fieldMinLength('Nome', 3), fieldMaxLength('Nome', 80)]
 const emailRules = [fieldRequired('E-mail'), fieldMaxLength('E-mail', 80), fieldIsEmail('E-mail')]
@@ -123,7 +125,7 @@ function openModal(requestedStudent: StudentResponseDto | 'new') {
     typeof requestedStudent === 'object'
       ? new StudentEditDto(requestedStudent)
       : new StudentRegisterDto({
-          ra: '',
+          ra: null,
           cpf: '',
           name: '',
           email: ''

@@ -3,7 +3,6 @@ import StudentController from '@backend/modules/student/student.controller';
 import { StudentService } from '@backend/modules/student/student.service';
 import { StudentRegisterDto } from '@backend/modules/student/dto/student-register.dto';
 import { StudentEditDto } from '@backend/modules/student/dto/student-edit.dto';
-import { SelectQueryBuilder } from 'typeorm';
 import { StudentModel } from '@backend/models/student.entity';
 
 describe('StudentController', () => {
@@ -78,7 +77,7 @@ describe('StudentController', () => {
     it('should create a student', async () => {
       const studentDto: StudentRegisterDto = new StudentRegisterDto({
         name: 'John Doe',
-        ra: '123456',
+        ra: 123456,
         cpf: '00011122233',
         email: 'john@example.com',
       });

@@ -23,7 +23,7 @@ export class StudentModel {
 
   @Column()
   @Index({ unique: true, where: 'deleted_at IS NULL' })
-  ra: string;
+  ra: number;
 
   @Column()
   @Index({ unique: true, where: 'deleted_at IS NULL' })

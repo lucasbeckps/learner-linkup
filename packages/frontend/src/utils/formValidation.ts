@@ -19,6 +19,13 @@ export function fieldMaxLength(field: string, length: number) {
   }
 }
 
+export function fieldIsNumber(field: string) {
+  return (value) => {
+    if (!isNaN(value)) return true
+    return `${field} precisa ser um número`
+  }
+}
+
 export function fieldIsEmail(field: string) {
   return (value) => {
     if (/.+@.+\..+/.test(value)) return true
