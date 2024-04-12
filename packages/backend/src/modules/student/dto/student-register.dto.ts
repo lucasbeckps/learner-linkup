@@ -1,9 +1,11 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator'
 import { IsUnique } from '@backend/validators/isUnique';
+import { Transform, TransformFnParams } from 'class-transformer'
 
 export class StudentRegisterDto {
   @IsString({ message: 'O valor do campo Nome é inválido' })
   @IsNotEmpty({ message: 'O campo Nome é obrigatório' })
+  @Transform(({ value }: TransformFnParams) => value?.trim())
   name: string;
 
   @IsNumber({}, { message: 'O valor do campo Registro Acadêmico é inválido' })
@@ -25,6 +27,7 @@ export class StudentRegisterDto {
     },
     { message: 'O CPF informado já está em uso.' },
   )
+  @Transform(({ value }: TransformFnParams) => value?.trim())
   cpf: string;
 
   @IsEmail(undefined, { message: 'O campo E-mail deve ser um email válido' })
@@ -35,6 +38,7 @@ export class StudentRegisterDto {
     },
     { message: 'O E-mail informado já está em uso.' },
   )
+  @Transform(({ value }: TransformFnParams) => value?.trim())
   email: string;
 
   constructor(partial: Partial<StudentRegisterDto>) {
