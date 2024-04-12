@@ -144,6 +144,7 @@
       </v-col>
     </div>
   </v-sheet>
+  <v-pagination :length="totalPages" v-model="page" class="mt-4" />
   <RegisterModal
     @mounted="({ openModalFn }) => (openRegisterModal = openModalFn)"
     @save="reloadStudents"
@@ -167,16 +168,21 @@ const openDeleteDialog = ref(() => {})
 
 const search = ref('')
 const queryClient = useQueryClient()
+const totalPages = ref(null)
+const page = ref(1)
 
 async function fetchStudents(): Promise<StudentResponseDto[]> {
   if (!isAuthTokenValid()) location.reload()
 
   const { data } = await api.get('students', {
     params: {
-      search: search.value
+      search: search.value,
+      page: page.value
     }
   })
-  return data.map((student) => ({
+
+  totalPages.value = data.totalPages
+  return data.students.map((student) => ({
     ...student,
     created_at: new Date(student.created_at)
   }))
@@ -200,9 +206,13 @@ const {
 watch(
   search,
   debounce(() => {
-    queryClient.invalidateQueries({ queryKey: ['students'] })
+    reloadStudents()
   }, 500)
 )
+
+watch(page, () => {
+  reloadStudents()
+})
 </script>
 
 <style>

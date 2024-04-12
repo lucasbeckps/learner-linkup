@@ -6,6 +6,8 @@ import { StudentResponseDto } from '@backend/modules/student/dto/student-respons
 import { StudentRegisterDto } from '@backend/modules/student/dto/student-register.dto';
 import { StudentEditDto } from '@backend/modules/student/dto/student-edit.dto';
 
+const ITEMS_PER_PAGE = 20;
+
 @Injectable()
 export class StudentService {
   constructor(
@@ -16,8 +18,18 @@ export class StudentService {
   getBaseQuery() {
     return this.studentRepository
       .createQueryBuilder('student')
-      .orderBy('created_at', 'DESC')
       .addOrderBy('student_id', 'DESC');
+  }
+
+  paginate(qb, page) {
+    return qb
+      .orderBy('created_at', 'DESC')
+      .offset((page - 1) * ITEMS_PER_PAGE)
+      .limit(ITEMS_PER_PAGE);
+  }
+
+  getTotalPages(qb) {
+    return qb.getCount().then((count) => Math.ceil(count / ITEMS_PER_PAGE));
   }
 
   applySearch(qb, search) {
