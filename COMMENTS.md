@@ -30,6 +30,7 @@ maior clareza nas responsabilidades de cada componente dentro da aplicação.
 - **Vue-Toast-Notification:** Para exibição de notificações ao usuário.
 
 ### Global
+- **Renovate Bot:** Ferramenta para manter as dependências do projeto atualizadas.
 - **Yarn Berry:** Gerenciador de pacotes que facilita o uso de mono-repositórios.
 - **Docker:** Utilizado para containerização da aplicação.
 - **Concurrently:** Permite a execução de múltiplos comandos simultaneamente.
