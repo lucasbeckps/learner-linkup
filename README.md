@@ -4,7 +4,6 @@ LearnerLinkup is a web application designed to streamline the student enrollment
 ## Prerequisites 📋
 Before you can launch the LearnerLinkup project, ensure the following software is installed on your system:
 - [Node.js](https://nodejs.org/en/) (version 18 or later)
-- [Yarn](https://yarnpkg.com/) for package management
 - For database management, either [Docker](https://docs.docker.com/get-docker/) or a local installation of [PostgreSQL](https://www.postgresql.org/download/) can be used.
 
 ## Installation ⚙️
@@ -21,20 +20,32 @@ git clone git@github.com:lucasbeckps/learner-linkup.git
 git clone https://github.com/lucasbeckps/learner-linkup.git
 ```
 
-### 2. Install dependencies: 📦
-Navigate to the project's root directory and execute `yarn install` to install all required dependencies for the packages within the monorepo.
+### 2. Enable Node Corepack: ❇️ 
+If Corepack is not already enabled on your system, you can activate it by running the following command as root or using sudo:
+```sh
+sudo corepack enable
+```
+Corepack allows you to manage your Node.js package managers and ensures that you use the package manager version 
+specified in the 'package.json' file.
 
-### 3. Create a `.env` file: 🔑
+### 3. Install dependencies: 📦
+Navigate to the project's root directory where the package.json is located and run the following command to install 
+all required dependencies for the packages within the monorepo:
+```sh
+yarn install
+```
+
+### 4. Create a `.env` file: 🔑
 Duplicate the `.env.example` file and rename the copy to `.env`. 
 
 By default, LearnerLinkup is configured to use a PostgreSQL database within a Docker container. 
 Should you prefer utilizing a local PostgreSQL database, adjust the environment variables in the .env file accordingly.
 
-### 4. Start the database: 💾
+### 5. Start the database: 💾
 - For Docker users: Execute `docker compose up --build` to build and start the postgresql database container.
 - For local PostgreSQL users: Ensure your PostgreSQL database service is active.
 
-### 5. Apply the migrations: 📝
+### 6. Apply the migrations: 📝
 Execute `yarn migrate` to apply database migrations and create necessary tables.  
 If desired, you can set the project seed the database with preliminary data initially. 
 These settings can be modified in the [migrations-config.js](/packages/backend/migrations.config.js) file.
