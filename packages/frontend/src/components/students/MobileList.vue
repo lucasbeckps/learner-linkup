@@ -30,7 +30,7 @@
       </v-list-item-title>
     </template>
     <template v-slot:subtitle="student">
-      <v-row class="text-white">
+      <v-row>
         <v-col class="pb-0" cols="12" md="4"> RA: {{ student.item.ra }} </v-col>
         <v-col class="pb-0 pt-1" cols="12" md="4">CPF: {{ student.item.cpf }} </v-col>
         <v-col class="pb-0 pt-1" cols="12" md="4">E-mail: {{ student.item.email }} </v-col>
