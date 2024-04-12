@@ -21,7 +21,7 @@ export class StudentModel {
   @Index({ where: 'deleted_at IS NULL' })
   name: string;
 
-  @Column()
+  @Column({ type: 'bigint' })
   @Index({ unique: true, where: 'deleted_at IS NULL' })
   ra: number;
 

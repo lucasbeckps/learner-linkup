@@ -106,7 +106,7 @@ const $toast = useToast()
 // Form validation
 const isFormValid = ref(false)
 const cpfMaskOptions = { mask: '###.###.###-##' }
-const raRules = [fieldRequired('RA'), fieldMaxLength('RA', 20), fieldIsNumber('RA')]
+const raRules = [fieldRequired('RA'), fieldMaxLength('RA', 15), fieldIsNumber('RA')]
 const cpfRules = [fieldRequired('CPF'), fieldIsCpf('CPF')]
 const nameRules = [fieldRequired('Nome'), fieldMinLength('Nome', 3), fieldMaxLength('Nome', 80)]
 const emailRules = [fieldRequired('E-mail'), fieldMaxLength('E-mail', 80), fieldIsEmail('E-mail')]
