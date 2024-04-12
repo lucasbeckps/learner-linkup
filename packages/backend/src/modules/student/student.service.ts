@@ -43,7 +43,7 @@ export class StudentService {
         search: `%${search}%`,
       });
 
-      qb.orWhere('normalize_string(student.ra) ILIKE :search', {
+      qb.orWhere('student.ra::varchar(255) ILIKE :search', {
         search: `%${nomalizedSearch}%`,
       });
 
