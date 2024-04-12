@@ -46,7 +46,7 @@
             :prepend-icon="navlink.icon"
             :title="navlink.title"
             :value="navlink.title"
-            :active="$route.matched.some(({ name }) => name === navlink.title)"
+            :active="$route.matched.some(({ path }) => path === navlink.to)"
           />
         </RouterLink>
       </v-list>
@@ -56,7 +56,7 @@
       <RouterLink
         v-for="navlink in navigationItems"
         :to="navlink.to"
-        :class="`navlink bottom-navlink ${$route.matched.some(({ name }) => name === navlink.title) ? 'active' : ''}`"
+        :class="`navlink bottom-navlink ${$route.matched.some(({ path }) => path === navlink.to) ? 'active' : ''}`"
       >
         <v-icon>{{ navlink.icon }}</v-icon>
         <span>{{ navlink.title }}</span>
@@ -89,11 +89,12 @@ const user = computed(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
 .navlink {
   text-decoration: none;
   color: inherit;
 }
+
 .bottom-navlink {
   display: flex;
   align-items: center;
@@ -101,46 +102,52 @@ const user = computed(() => {
   justify-content: center;
   padding: 0 1.2rem;
   font-size: 0.8rem;
+
+  i {
+    font-size: 1.5rem;
+  }
+  span {
+    margin-top: 2px;
+  }
+  &.active {
+    background-color: rgba(var(--v-theme-on-surface), 0.1);
+  }
 }
-.bottom-navlink i {
-  font-size: 1.5rem;
-}
-.bottom-navlink span {
-  margin-top: 2px;
-}
-.bottom-navlink.active {
-  background-color: rgba(var(--v-theme-on-surface), 0.1);
-}
+
 .header-logo {
   display: flex;
+
+  .custom-logo {
+    padding: 0 0 0 0.5rem;
+  }
+  .custom-title {
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 3rem;
+  }
 }
-.header-logo .custom-logo {
-  padding: 0 0 0 0.5rem;
-}
-.header-logo .custom-title {
-  font-weight: 300;
-  font-size: 1.5rem;
-  line-height: 3rem;
-}
+
 .custom-toggle-button {
   font-size: 0.7rem;
   color: #777777;
   width: 34px !important;
+
+  i {
+    transition: all ease-in-out 0.2s;
+    transform: rotate(140deg);
+  }
+  span {
+    margin-top: -2px;
+    height: calc(100% + 2px);
+  }
+  &.v-btn--active {
+    color: inherit;
+  }
+  &.v-btn--active i {
+    transform: rotate(45deg) translateX(1px) translateY(1px);
+  }
 }
-.custom-toggle-button i {
-  transition: all ease-in-out 0.2s;
-  transform: rotate(140deg);
-}
-.custom-toggle-button span {
-  margin-top: -2px;
-  height: calc(100% + 2px);
-}
-.custom-toggle-button.v-btn--active {
-  color: inherit;
-}
-.custom-toggle-button.v-btn--active i {
-  transform: rotate(45deg) translateX(1px) translateY(1px);
-}
+
 .custom-moon.v-btn--active i {
   transform: rotate(45deg) translateX(-2px) translateY(2px);
 }

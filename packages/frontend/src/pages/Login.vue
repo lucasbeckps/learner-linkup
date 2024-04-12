@@ -176,20 +176,23 @@ async function register() {
 }
 </script>
 
-<style>
+<style lang="scss">
 .login-wrapper {
   height: calc(100vh - 8rem);
   padding-top: 3rem;
-}
-.login-card {
-  width: 100%;
-  max-width: 500px;
-  height: fit-content;
-}
-.login-card button {
-  min-width: 120px;
-}
-.no-capitalize {
-  text-transform: none;
+
+  .login-card {
+    width: 100%;
+    max-width: 500px;
+    height: fit-content;
+
+    button {
+      min-width: 120px;
+    }
+  }
+
+  .no-capitalize {
+    text-transform: none;
+  }
 }
 </style>

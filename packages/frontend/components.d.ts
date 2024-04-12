@@ -9,10 +9,17 @@ declare module 'vue' {
   export interface GlobalComponents {
     DarkModeToggle: typeof import('./src/components/layout/DarkModeToggle.vue')['default']
     DeleteDialog: typeof import('./src/components/students/DeleteDialog.vue')['default']
+    EmptyState: typeof import('./src/components/students/EmptyState.vue')['default']
+    Error: typeof import('./src/components/students/Error.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    ListHeader: typeof import('./src/components/students/ListHeader.vue')['default']
+    MobileList: typeof import('./src/components/students/MobileList.vue')['default']
     RegisterModal: typeof import('./src/components/students/RegisterModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StudentsMobileList: typeof import('./src/components/students/StudentsMobileList.vue')['default']
+    StudentsTable: typeof import('./src/components/students/StudentsTable.vue')['default']
     System: typeof import('./src/components/layout/System.vue')['default']
+    Table: typeof import('./src/components/students/Table.vue')['default']
   }
 }
