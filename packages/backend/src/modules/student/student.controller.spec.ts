@@ -23,6 +23,8 @@ describe('StudentController', () => {
     mockStudentService = {
       getBaseQuery: jest.fn(() => mockQueryBuilder),
       applySearch: jest.fn(),
+      paginate: jest.fn(),
+      getTotalPages: jest.fn().mockResolvedValue(1),
       getStudents: jest.fn().mockResolvedValue([]),
       createStudent: jest.fn().mockImplementation((studentDto, userId) =>
         Promise.resolve({
@@ -66,10 +68,13 @@ describe('StudentController', () => {
   });
 
   describe('getStudents', () => {
-    it('should return an array of students', async () => {
+    it('should return students page response', async () => {
       const result = await controller.getStudents('searchQuery');
       expect(mockStudentService.getStudents).toHaveBeenCalled();
-      expect(result).toEqual([]);
+      expect(result).toEqual({
+        totalPages: 1,
+        students: [],
+      });
     });
   });
 

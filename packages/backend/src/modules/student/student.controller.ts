@@ -17,6 +17,7 @@ import { StudentResponseDto } from '@backend/modules/student/dto/student-respons
 import { StudentRegisterDto } from '@backend/modules/student/dto/student-register.dto';
 import { StudentEditDto } from '@backend/modules/student/dto/student-edit.dto';
 import { GetAuthUser } from '@backend/modules/user/get-auth-user.decorator';
+import { StudentPageResponseDto } from '@backend/modules/student/dto/student-page-response.dto';
 
 @Controller('students')
 export default class StudentController {
@@ -24,11 +25,21 @@ export default class StudentController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  async getStudents(@Query('search') search): Promise<StudentResponseDto[]> {
+  async getStudents(
+    @Query('search') search,
+    @Query('page') page = 1,
+  ): Promise<StudentPageResponseDto> {
     const qb = this.studentService.getBaseQuery();
     this.studentService.applySearch(qb, search);
+
+    const totalPages = await this.studentService.getTotalPages(qb);
+    this.studentService.paginate(qb, page);
     const students = await this.studentService.getStudents(qb);
-    return this.studentService.normalizeStudentList(students);
+
+    return {
+      students: this.studentService.normalizeStudentList(students),
+      totalPages,
+    };
   }
 
   @Post()
