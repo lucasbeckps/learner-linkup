@@ -8,6 +8,7 @@
         <span class="text-grey-lighten-1">
           <v-list-item-action style="height: 25px">
             <v-btn
+              title="Editar aluno"
               @click="openRegisterModal(student.item)"
               class="custom-list-buttom text-blue-grey-darken-1"
               style="font-size: 0.8rem"
@@ -17,6 +18,7 @@
               <v-icon>mdi-pencil</v-icon>
             </v-btn>
             <v-btn
+              title="Deletar aluno"
               @click="openDeleteDialog(student.item)"
               class="custom-list-buttom delete-button text-blue-grey-darken-1"
               style="font-size: 0.8rem"

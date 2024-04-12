@@ -6,7 +6,7 @@
         <th class="text-left">Nome</th>
         <th class="text-left">CPF</th>
         <th class="text-left">E-mail</th>
-        <th class="text-left">Data de cadastro</th>
+        <th class="text-left">Data de Cadastro</th>
         <th class="text-left"></th>
       </tr>
     </thead>
@@ -26,6 +26,7 @@
         </td>
         <td class="text-right text-no-wrap">
           <v-btn
+            title="Editar aluno"
             @click="openRegisterModal(item)"
             class="custom-list-buttom text-blue-grey-darken-1"
             flat
@@ -34,6 +35,7 @@
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
           <v-btn
+            title="Deletar aluno"
             @click="openDeleteDialog(item)"
             class="custom-list-buttom delete-button text-blue-grey-darken-1"
             flat
