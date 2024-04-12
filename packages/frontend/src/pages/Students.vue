@@ -6,7 +6,6 @@
       </v-col>
       <v-col cols="12" xs="12" md="">
         <v-text-field
-          v-if="!isPending && students?.length"
           v-model="search"
           variant="plain"
           hide-details
@@ -134,14 +133,19 @@
     <div v-else class="pl-10 pr-10">
       <v-img style="height: 200px; margin: 3rem 0 1rem 0" src="@frontend/assets/scene.svg" />
       <p class="text-h4 text-center">Ninguém por aqui!</p>
-      <p class="mt-2 mb-4 text-center">
-        Parece que ainda não há alunos cadastrados. Que tal adicionar um?
+      <template v-if="!lastLoadedSearch.length">
+        <p class="mt-2 mb-4 text-center">
+          Parece que ainda não há alunos cadastrados. Que tal adicionar um?
+        </p>
+        <v-col class="d-flex justify-center mb-16">
+          <v-btn @click="openRegisterModal('new')" color="secondary" border elevation="0">
+            Adicionar aluno
+          </v-btn>
+        </v-col>
+      </template>
+      <p v-else class="mt-2 mb-4 text-center mb-16">
+        Não encontramos nenhum aluno pesquisando pelo termo "{{ lastLoadedSearch }}".
       </p>
-      <v-col class="d-flex justify-center mb-16">
-        <v-btn @click="openRegisterModal('new')" color="secondary" border elevation="0">
-          Adicionar aluno
-        </v-btn>
-      </v-col>
     </div>
   </v-sheet>
   <v-pagination :length="totalPages" v-model="page" class="mt-4" />
@@ -167,6 +171,7 @@ const openRegisterModal = ref(() => {})
 const openDeleteDialog = ref(() => {})
 
 const search = ref('')
+const lastLoadedSearch = ref('')
 const queryClient = useQueryClient()
 const totalPages = ref(null)
 const page = ref(1)
@@ -174,12 +179,14 @@ const page = ref(1)
 async function fetchStudents(): Promise<StudentResponseDto[]> {
   if (!isAuthTokenValid()) location.reload()
 
+  const searchCopy = `${search.value}`
   const { data } = await api.get('students', {
     params: {
       search: search.value,
       page: page.value
     }
   })
+  lastLoadedSearch.value = searchCopy
 
   totalPages.value = data.totalPages
   return data.students.map((student) => ({
